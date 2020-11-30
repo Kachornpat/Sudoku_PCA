@@ -5,6 +5,7 @@ pygame.init()
 
 #set window
 screen = pygame.display.set_mode((800, 550))
+pygame.display.set_caption("Sudoku")
 img = pygame.image.load("sudoku_img.png")
 pygame.display.set_icon(img)
 
@@ -13,26 +14,28 @@ black = (0, 0, 0)
 gray = (200, 200, 200)
 dark_gray = (225, 225, 225)
 
-sudoku = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+sudoku = [[0, 0, 6, 0, 0, 0, 5, 0, 0],
+          [8, 0, 3, 5, 0, 6, 9, 0, 1],
+          [0, 0, 0, 1, 8, 4, 0, 0, 0],
           
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 5, 0, 0, 0, 2, 0, 0],
+          [0, 0, 2, 3, 5, 7, 4, 0, 0],
+          [7, 0, 0, 4, 0, 2, 0, 0, 9],
           
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+          [0, 0, 1, 0, 4, 0, 7, 0, 0],
+          [9, 0, 0, 0, 6, 0, 0, 0, 5],
+          [3, 0, 0, 0, 0, 0, 0, 0, 2]]
 
 enable_row = 0
 enable_column = 0
 enable = False
 
+not_empty = []
+
 value = ""
 font = pygame.font.SysFont("Ariel.ttf", 50)
 number = None
-
+       
 #build white screen
 screen.fill(white)
 
@@ -44,13 +47,14 @@ def table(pos, dimension, color):
                           (pos[0] + dimension*i, pos[1] + dimension*j, dimension, dimension), 3)
 
 def update(value):
-   global number
-   pygame.draw.rect(screen, dark_gray, (enable_row*50 + 2, enable_column*50 + 2, 46, 46))
-   number = font.render(f"{value}", True, black)
-   screen.blit(number, (enable_row*50 + 15, enable_column*50 + 10))
-   sudoku[enable_column - 1][enable_row - 1] = value        
-   pygame.display.update()
-   pygame.time.wait(100)
+   global number, not_empty, enable_row, enable_column
+   if (enable_row - 1, enable_column - 1) not in not_empty: 
+      pygame.draw.rect(screen, dark_gray, (enable_row*50 + 2, enable_column*50 + 2, 46, 46))
+      number = font.render(f"{value}", True, black)
+      screen.blit(number, (enable_row*50 + 15, enable_column*50 + 10))
+      sudoku[enable_column - 1][enable_row - 1] = value        
+      pygame.display.update()
+      pygame.time.wait(100)
 
          
 # draw small 3x3 table 9 times
@@ -61,6 +65,14 @@ for i in range(3):
 # draw 3x3 one time
 table((50, 50), 150, black)
 
+#write the number
+for i in range(9):
+   for j in range(9):
+      if sudoku[i][j] != 0:
+         number = font.render(f"{sudoku[i][j]}", True, black)
+         screen.blit(number, ((j + 1)*50 + 15, (i + 1)*50 + 10))
+         not_empty.append((j, i))
+number = None
 # update screen
 pygame.display.update()
 run = True
@@ -69,6 +81,7 @@ while run:
    for event in pygame.event.get():
       if event.type == pygame.QUIT:
          run = False
+         print(not_empty)
          pygame.quit()
          sys.exit()
          
