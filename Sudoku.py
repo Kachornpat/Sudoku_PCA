@@ -44,7 +44,7 @@ def table(pos, dimension, color):
 for i in range(3):
    for j in range(3):
       table((50 + 150*i, 50 + 150*j), 50, gray)
-5      
+
 # draw 3x3 one time
 table((50, 50), 150, black)
 
