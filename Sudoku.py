@@ -90,7 +90,7 @@ while run:
             if number != None and sudoku[(pygame.mouse.get_pos()[1]//50)-1][(pygame.mouse.get_pos()[0]//50)-1] != 0:
                number = font.render(f"{sudoku[(pygame.mouse.get_pos()[1]//50)-1][(pygame.mouse.get_pos()[0]//50)-1]}", True, black)
                screen.blit(number, ((pygame.mouse.get_pos()[0]//50)*50 + 15, (pygame.mouse.get_pos()[1]//50)*50 + 10))
-            
+            #update the enable box
             enable_row = (pygame.mouse.get_pos()[0]//50)
             enable_column = (pygame.mouse.get_pos()[1]//50)
 
@@ -118,8 +118,9 @@ while run:
                               ((pygame.mouse.get_pos()[0]//50)*50 + 2,
                                  (pygame.mouse.get_pos()[1]//50)*50 + 2, 46, 46))
                if number != None and sudoku[(pygame.mouse.get_pos()[1]//50)-1][(pygame.mouse.get_pos()[0]//50)-1] != 0:
-                  number = font.render(f"{sudoku[enable_column-1][enable_row-1]}", True, black)
-                  screen.blit(number, (enable_row*50 + 15, enable_column*50 + 10))
+                  number = font.render(f"{sudoku[(pygame.mouse.get_pos()[1]//50) - 1][ (pygame.mouse.get_pos()[0]//50) - 1]}", True, black)
+                  screen.blit(number, ( (pygame.mouse.get_pos()[0]//50)*50 + 15, (pygame.mouse.get_pos()[1]//50)*50 + 10) )
+               #update the enable box
                enable_row = (pygame.mouse.get_pos()[0]//50)
                enable_column = (pygame.mouse.get_pos()[1]//50)
          
