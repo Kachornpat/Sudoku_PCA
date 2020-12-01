@@ -208,7 +208,6 @@ def solve():
                   else:
                      return True
             return False
-   return True
 
 main(run)
 p = pygame.time.get_ticks()
